@@ -1,0 +1,79 @@
+﻿<Window x:Class="MvvmLight1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ignore="http://www.galasoft.ch/ignore"
+        mc:Ignorable="d ignore"
+        Height="900"
+        Width="1300"
+        Title="Trading Bot"
+        DataContext="{Binding Main, Source={StaticResource Locator}}">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Skins/MainSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0"
+                    Grid.Column="0">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Margin="5">The Application started at:</TextBlock>
+                <TextBlock Margin="5"
+                           Text="{Binding StartTime,StringFormat=MM/dd/yy H:mm:ss}"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Margin="5">SYS last price at:</TextBlock>
+                <TextBlock Margin="5"
+                           Text="{Binding SysPriceLastRefreshTime,StringFormat=MM/dd/yy H:mm:ss}"></TextBlock>
+                <TextBlock Margin="5"
+                           Text="{Binding SysCoinLastPrice}"></TextBlock>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="0"
+                    Grid.Column="1">
+            <TextBlock Text="{Binding LogTime, StringFormat=MM/dd/yy H:mm:ss}"></TextBlock>
+            <DataGrid ItemsSource="{Binding NotEmptyBalances}"
+                      AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Currency"
+                                        Binding="{Binding Key}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="BTC Value"
+                                        Binding="{Binding Value.BitcoinValue}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Available"
+                                        Binding="{Binding Value.QuoteAvailable}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="On Ordsers"
+                                        Binding="{Binding Value.QuoteOnOrders}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+        <StackPanel Grid.Row="1"
+                    Grid.Column="0">
+            <Button Height="35"
+                    Margin="5"
+                    Content="Buy"></Button>
+            <Button Height="35"
+                    Margin="5"
+                    Content="Sell"></Button>
+        </StackPanel>
+        <StackPanel Grid.Row="1"
+                    Grid.Column="1">
+            <DataGrid Height="300"
+                      ItemsSource="{Binding SysTrades}"></DataGrid>
+        </StackPanel>
+    </Grid>
+</Window>

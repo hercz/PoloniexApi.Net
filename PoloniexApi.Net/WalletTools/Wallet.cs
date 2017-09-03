@@ -14,11 +14,11 @@ namespace Jojatekok.PoloniexAPI.WalletTools
             ApiWebClient = apiWebClient;
         }
 
-        private IDictionary<string, IBalance> GetBalances()
+        private IDictionary<string, Balance> GetBalances()
         {
             var postData = new Dictionary<string, object>();
 
-            var data = PostData<IDictionary<string, IBalance>>("returnCompleteBalances", postData);
+            var data = PostData<IDictionary<string, Balance>>("returnCompleteBalances", postData);
             return data;
         }
 
@@ -66,7 +66,7 @@ namespace Jojatekok.PoloniexAPI.WalletTools
             PostData<IGeneratedDepositAddress>("withdraw", postData);
         }
 
-        public Task<IDictionary<string, IBalance>> GetBalancesAsync()
+        public Task<IDictionary<string, Balance>> GetBalancesAsync()
         {
             return Task.Factory.StartNew(() => GetBalances());
         }
